@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
 
@@ -33,12 +35,29 @@ public class Main {
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
+        List<Usr> usrList = new LinkedList<>();
+
         while (resultSet.next()) {
 
-            System.out.println("id: " + resultSet.getInt("idUsr"));
-            System.out.println("name: " + resultSet.getString("nameUsr"));
-            System.out.println("password: " + resultSet.getString("password"));
+            Usr usr = new Usr();
+
+            usr.setId(resultSet.getInt("idUsr"));
+            usr.setName(resultSet.getString("nameUsr"));
+            usr.setPassword(resultSet.getString("password"));
+
+            usrList.add(usr);
         }
+
+        for (Usr usr : usrList) {
+
+            System.out.println("id: " + usr.getId());
+            System.out.println("name: " + usr.getName());
+            System.out.println("password: " + usr.getPassword());
+        }
+
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
 
     }
 
