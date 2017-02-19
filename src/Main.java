@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Main {
 
@@ -17,7 +14,7 @@ public class Main {
                                                             "password varchar)");
         preparedStatement.executeUpdate();*/
 
-        preparedStatement = connection.prepareStatement(
+        /*preparedStatement = connection.prepareStatement(
                 "insert into usr (id, name, password) " +
                         "values(?, ?, ?)");
 
@@ -29,7 +26,19 @@ public class Main {
             preparedStatement.addBatch();
         }
 
-        preparedStatement.executeBatch();
+        preparedStatement.executeBatch();*/
+
+        preparedStatement = connection.prepareStatement(
+                "select id as idUsr, name as nameUsr, password from usr");
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+
+            System.out.println("id: " + resultSet.getInt("idUsr"));
+            System.out.println("name: " + resultSet.getString("nameUsr"));
+            System.out.println("password: " + resultSet.getString("password"));
+        }
 
     }
 
